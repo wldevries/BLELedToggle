@@ -17,6 +17,7 @@
                           HorizontalAlignment="Center" Padding="5" Margin="5">
                 Led
             </ToggleButton>
+            <TextBlock x:Name="notice"/>
         </StackPanel>
     </Grid>
 </Page>

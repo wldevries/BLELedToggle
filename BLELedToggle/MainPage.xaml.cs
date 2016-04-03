@@ -31,6 +31,7 @@ namespace BLELedToggle
         private GattCharacteristic characteristic;
         private DeviceInformationCollection devices;
         private GattDeviceService service;
+        private DeviceInformation device;
 
         public MainPage()
         {
@@ -47,11 +48,21 @@ namespace BLELedToggle
             this.devices = await DeviceInformation.FindAllAsync(
                 GattDeviceService.GetDeviceSelectorFromUuid(LedService),
                 new string[] { "System.Devices.ContainerId" });
-            var device = devices.First();
-            this.service = await GattDeviceService.FromIdAsync(device.Id);
 
-            this.characteristic = service.GetCharacteristics(LedCharacteristic)[0];
-            this.button.IsEnabled = true;
+            if (devices.Count == 0)
+            {
+                this.notice.Text = "Could find paired LED device";
+            }
+            else
+            {
+                this.device = devices[0];
+                this.service = await GattDeviceService.FromIdAsync(device.Id);
+
+                this.characteristic = service.GetCharacteristics(LedCharacteristic)[0];
+                this.button.IsEnabled = true;
+
+                this.notice.Text = "Connected";
+            }
         }
 
         private async void buttonClick(object sender, RoutedEventArgs e)
