@@ -51,7 +51,7 @@ namespace BLELedToggle
 
             if (devices.Count == 0)
             {
-                this.notice.Text = "Could find paired LED device";
+                this.notice.Text = "Could not find paired LED device";
             }
             else
             {
